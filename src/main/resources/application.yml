@@ -7,7 +7,7 @@ server:
 #      password: 123456
 
 dex:
-  clientId: test3
-  clientSecret: ZWEFWJRFBCRZUXCLKKKUQQ
+  clientId: dex_jingrui
+  clientSecret: QACCDTXXTTBLNMSWQCHXNV
   scope: all
   rootUrl: https://www.fgconsulting.cn:10106

@@ -47,7 +47,7 @@ public class DemoService {
     private String rootUrl;
 
     /**
-     * 获取分析信息调用地址
+     * 获取指标信息调用地址
      */
     private String realEstateNetNeuronUrl="%s/api/dex/resources/index";
 
@@ -64,10 +64,10 @@ public class DemoService {
     /**
      * 获取分析结果
      * */
-    private String pullAnalysis = "%s/api/dex/resources/analysis?index=%s&dataPeriod=%s";
+    private String pullAnalysis = "%s/api/dex/resources/analysis?orgCode=%s&index=%s&dataPeriod=%s";
 
     /**
-     * 获取分析结果
+     * 获取指标结果
      * */
     public Map<String,Object> realEstateNetNeuron(){
         // 初始化调用地址
@@ -102,9 +102,9 @@ public class DemoService {
     /**
      * 查询分析结果信息
      * */
-    public Map<String,Object> pullAnalysis(String index,String dataPeriod,String attributeType,String attributeValue){
+    public Map<String,Object> pullAnalysis(String orgCode,String index,String dataPeriod,String attributeType,String attributeValue){
         // 初始化调用地址
-        StringBuilder url = new StringBuilder(String.format(pullAnalysis,rootUrl,index,dataPeriod));
+        StringBuilder url = new StringBuilder(String.format(pullAnalysis,rootUrl,orgCode,index,dataPeriod));
         if(!StringUtils.isEmpty(attributeType)){
             url.append("&attributeType=");
             url.append(attributeType);
