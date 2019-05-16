@@ -4,11 +4,14 @@ import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.http.client.ClientHttpRequestFactory;
+import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -24,20 +27,27 @@ import org.springframework.web.client.RestTemplate;
 @Slf4j
 public class ClientCredentialsService {
     @Autowired
+    HttpsClientLocal httpsClientLocal;
+    @Autowired
     RestTemplateBuilder restTemplateBuilder;
     @Autowired
     @Qualifier("clientCredentialsRestTemplate")
     RestTemplate restTemplate;
 
+
     @Bean("clientCredentialsRestTemplate")
     public RestTemplate initRestTemplate(){
-        return restTemplateBuilder.build();
+        ClientHttpRequestFactory requestFactory = new HttpComponentsClientHttpRequestFactory(httpsClientLocal.httpClient());
+        RestTemplate restTemplate = restTemplateBuilder.build();
+        restTemplate.setRequestFactory(requestFactory);
+        return restTemplate;
     }
     /**
      * 服务器地址
      * */
     @Setter
-    private String serverHost = "http://localhost:10106";
+    @Value("${dex.rootUrl}")
+    private String serverHost;
     /**
      * 访问地址(form-data模式)
      * */
@@ -54,6 +64,7 @@ public class ClientCredentialsService {
      * scope，激活后的用户有all权限
      * */
     @Setter
+    @Value("${dex.scope}")
     private String scope = "all";
 
     @Setter

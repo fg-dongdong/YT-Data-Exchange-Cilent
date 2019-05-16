@@ -35,15 +35,6 @@ public class DemoService {
     private String clientId;
     @Setter
     private String clientSecret;
-
-    /**
-     * 验证非保护资源是否可以访问
-     * */
-    private String testNoTokenUrl = "http://localhost:10106/greenTest";
-    /**
-     * 验证受保护资源是否可访问
-     * */
-    private String testTokenUrl = "http://localhost:10106/api/hello";
     /**
      * 使用url传参形式访问资源
      * */
@@ -52,12 +43,13 @@ public class DemoService {
     /**
      * dex-changge 服务地址
      * */
-    private String rootUrl = "http://localhost:10106";
+    @Value("${dex.rootUrl}")
+    private String rootUrl;
 
     /**
      * 获取分析信息调用地址
      */
-    private String realEstateNetNeuronUrl="%s/api/dex/resources/realEstateNetNeuron";
+    private String realEstateNetNeuronUrl="%s/api/dex/resources/index";
 
     /**
      * 获取业主类型调用地址
@@ -67,33 +59,12 @@ public class DemoService {
     /**
      * 获取客户组织结构
      * */
-    private String pullDexOrgTree = "%s/api/dex/resources/dexOrgTree";
+    private String pullDexOrgTree = "%s/api/dex/resources/orgTree";
 
     /**
-     * 用于测试Oauth2服务的资源是否正常
+     * 获取分析结果
      * */
-    public boolean serverIsOk(){
-        // 1、目前YtDataExchange只支持客户端进行Oauth2中客户端授权模式的访问，因此在访问之前需要先获得客户端授权模式下的access_token
-        String accessToken = clientCredentialsService.getTokenByClientCredentials(clientId,clientSecret);
-        // 2、获取access_token以后，有两种方式进行资源访问
-        RestTemplate restTemplate = restTemplateBuilder.build();//初始化调用模板
-        // 2.0 非限制资源访问，测试服务器是否正常
-        String url = testNoTokenUrl;
-        String returnMsg = restTemplate.getForObject(url,String.class);
-        log.info("访问非资源结果:{}",returnMsg);
-
-        // 2.1 使用{请求连接+?access_token={access_token}}方式
-        url = testTokenUrl + String.format(accessTokenParam,accessToken);
-        returnMsg = restTemplate.getForObject(url,String.class);
-        log.info("使用url传入token调用保护资源结果:{}",returnMsg);
-        // 2.2 使用请求headers中添加参数
-        HttpHeaders requestHeaders = new HttpHeaders();
-        requestHeaders.add("Authorization","Bearer "+accessToken);
-        HttpEntity<String> requestEntity = new HttpEntity<String>(null, requestHeaders);
-        ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET,requestEntity,String.class);
-        log.info("使用请求头传入token调用保护资源结果:{}",response.getBody());
-        return true;
-    }
+    private String pullAnalysis = "%s/api/dex/resources/analysis?index=%s&dataPeriod=%s";
 
     /**
      * 获取分析结果
@@ -124,6 +95,25 @@ public class DemoService {
         // 初始化调用地址
         String url = String.format(pullDexOrgTree,rootUrl);
         ResponseEntity<Map> response = getMapResponseEntity(url);
+        log.info("请求结果:{}",response.getBody());
+        return response.getBody();
+    }
+
+    /**
+     * 查询分析结果信息
+     * */
+    public Map<String,Object> pullAnalysis(String index,String dataPeriod,String attributeType,String attributeValue){
+        // 初始化调用地址
+        StringBuilder url = new StringBuilder(String.format(pullAnalysis,rootUrl,index,dataPeriod));
+        if(!StringUtils.isEmpty(attributeType)){
+            url.append("&attributeType=");
+            url.append(attributeType);
+        }
+        if(!StringUtils.isEmpty(attributeValue)){
+            url.append("&attributeValue=");
+            url.append(attributeValue);
+        }
+        ResponseEntity<Map> response = getMapResponseEntity(url.toString());
         log.info("请求结果:{}",response.getBody());
         return response.getBody();
     }

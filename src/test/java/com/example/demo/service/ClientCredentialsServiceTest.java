@@ -19,6 +19,6 @@ public class ClientCredentialsServiceTest extends DemoApplicationTests {
 
     @Test
     public void getTokenTest(){
-      log.info("获取token：{}",clientCredentialsService.getTokenByClientCredentials("dex_jingrui","ZCEMSLQVBDKPPOYWZUAGUT"));
+      log.info("获取token：{}",clientCredentialsService.getTokenByClientCredentials("test3","ZWEFWJRFBCRZUXCLKKKUQQ"));
     }
 }

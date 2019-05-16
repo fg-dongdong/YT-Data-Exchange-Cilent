@@ -3,10 +3,8 @@ package com.example.demo.service;
 import com.example.demo.DemoApplicationTests;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.beans.factory.annotation.Value;
 
 /**
  * @Classname DemoServiceTest
@@ -19,20 +17,10 @@ import org.springframework.test.context.junit4.SpringRunner;
 public class DemoServiceTest extends DemoApplicationTests {
     @Autowired
     DemoService demoService;
-
-    private String clientId = "dex_jingrui";
-    private String clientSecret = "ZCEMSLQVBDKPPOYWZUAGUT";
-
-    @Test
-    public void testGreenTest(){
-        demoService.setClientId(this.clientId);
-        demoService.setClientSecret(this.clientSecret);
-        if(demoService.serverIsOk()){
-            log.info("服务可用");
-        }else{
-            log.info("服务不可用");
-        }
-    }
+    @Value("${dex.clientId}")
+    private String clientId;
+    @Value("${dex.clientSecret}")
+    private String clientSecret;
 
     @Test
     public void realEstateNetNeuronTest(){
@@ -50,8 +38,15 @@ public class DemoServiceTest extends DemoApplicationTests {
 
     @Test
     public void pullDexOrgTreeTest(){
-//        demoService.setClientId(this.clientId);
-//        demoService.setClientSecret(this.clientSecret);
+        demoService.setClientId(this.clientId);
+        demoService.setClientSecret(this.clientSecret);
         log.info("返回结果：{}",demoService.pullDexOrgTree());
+    }
+
+    @Test
+    public void pullAnalysisTest(){
+        demoService.setClientId(this.clientId);
+        demoService.setClientSecret(this.clientSecret);
+        log.info("返回结果：{}",demoService.pullAnalysis("1","2018-06","",""));
     }
 }
