@@ -27,24 +27,24 @@ public class Oauth2StoreServiceAdaptor {
 
     /**
      * 设置存储实现
-     * */
-    public Oauth2StoreServiceAdaptor codeService(CodeService codeService){
+     */
+    public Oauth2StoreServiceAdaptor codeService(CodeService codeService) {
         this.codeService = codeService;
         return this;
     }
 
     /**
      * 设置token存储服务
-     * */
-    public Oauth2StoreServiceAdaptor tokenService(TokenService tokenService){
+     */
+    public Oauth2StoreServiceAdaptor tokenService(TokenService tokenService) {
         this.tokenService = tokenService;
         return this;
     }
 
     /**
      * 设置refresh存储服务
-     * */
-    public Oauth2StoreServiceAdaptor refreshTokenService(RefreshTokenService refreshTokenService){
+     */
+    public Oauth2StoreServiceAdaptor refreshTokenService(RefreshTokenService refreshTokenService) {
         this.refreshTokenService = refreshTokenService;
         return this;
     }

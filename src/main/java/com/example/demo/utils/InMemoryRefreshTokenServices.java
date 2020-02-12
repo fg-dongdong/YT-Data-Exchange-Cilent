@@ -15,18 +15,18 @@ import java.util.concurrent.ConcurrentHashMap;
 public class InMemoryRefreshTokenServices implements RefreshTokenService {
     /**
      * 用于存储refresh_code的集合
-     * */
-    private final ConcurrentHashMap<String,String> refreshTokenMap = new ConcurrentHashMap<>();
+     */
+    private final ConcurrentHashMap<String, String> refreshTokenMap = new ConcurrentHashMap<>();
 
     @Override
     public boolean addCode(String name, String code) {
-        refreshTokenMap.put(name,code);
+        refreshTokenMap.put(name, code);
         return false;
     }
 
     @Override
     public boolean removeCode(String name, String code) {
-        return refreshTokenMap.remove(name,code);
+        return refreshTokenMap.remove(name, code);
     }
 
     @Override
@@ -38,9 +38,6 @@ public class InMemoryRefreshTokenServices implements RefreshTokenService {
     @Override
     public boolean haveCodeByName(String name) {
         String key = refreshTokenMap.get(name);
-        if(StringUtils.isEmpty(key)){
-            return false;
-        }
-        return true;
+        return !StringUtils.isEmpty(key);
     }
 }

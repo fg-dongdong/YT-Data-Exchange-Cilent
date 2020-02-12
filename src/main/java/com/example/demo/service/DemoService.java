@@ -37,90 +37,114 @@ public class DemoService {
     private String clientSecret;
     /**
      * 使用url传参形式访问资源
-     * */
+     */
     private String accessTokenParam = "?access_token=%s";
 
     /**
      * dex-changge 服务地址
-     * */
+     */
     @Value("${dex.rootUrl}")
     private String rootUrl;
 
     /**
      * 获取指标信息调用地址
      */
-    private String realEstateNetNeuronUrl="%s/api/dex/resources/index";
+    private String realEstateNetNeuronUrl = "%s/api/dex/resources/index";
 
     /**
      * 获取业主类型调用地址
-     * */
+     */
     private String pullAttributesUrl = "%s/api/dex/resources/attributes";
 
     /**
      * 获取客户组织结构
-     * */
+     */
     private String pullDexOrgTree = "%s/api/dex/resources/orgTree";
 
     /**
      * 获取分析结果
-     * */
+     */
     private String pullAnalysis = "%s/api/dex/resources/analysis?orgCode=%s&index=%s&dataPeriod=%s";
 
     /**
+     * 获取分析结果
+     */
+    private String pullBatchAnalysis = "%s/api/dex_batch/resources/analysis?orgCode=%s&dataPeriod=%s";
+
+    /**
      * 获取指标结果
-     * */
-    public Map<String,Object> realEstateNetNeuron(){
+     */
+    public Map<String, Object> realEstateNetNeuron() {
         // 初始化调用地址
-        String url = String.format(realEstateNetNeuronUrl,rootUrl);
+        String url = String.format(realEstateNetNeuronUrl, rootUrl);
         ResponseEntity<Map> response = getMapResponseEntity(url);
-        log.info("请求结果:{}",response.getBody());
+        log.info("请求结果:{}", response.getBody());
         return response.getBody();
     }
 
     /**
      * 查询业主类型信息
-     * */
-    public Map<String,Object> pullAttributes(){
+     */
+    public Map<String, Object> pullAttributes() {
         // 初始化调用地址
-        String url = String.format(pullAttributesUrl,rootUrl);
+        String url = String.format(pullAttributesUrl, rootUrl);
         ResponseEntity<Map> response = getMapResponseEntity(url);
-        log.info("请求结果:{}",response.getBody());
+        log.info("请求结果:{}", response.getBody());
         return response.getBody();
     }
 
     /**
      * 查询组织结构
-     * */
-    public Map<String,Object> pullDexOrgTree(){
+     */
+    public Map<String, Object> pullDexOrgTree() {
         // 初始化调用地址
-        String url = String.format(pullDexOrgTree,rootUrl);
+        String url = String.format(pullDexOrgTree, rootUrl);
         ResponseEntity<Map> response = getMapResponseEntity(url);
-        log.info("请求结果:{}",response.getBody());
+        log.info("请求结果:{}", response.getBody());
         return response.getBody();
     }
 
     /**
      * 查询分析结果信息
-     * */
-    public Map<String,Object> pullAnalysis(String orgCode,String index,String dataPeriod,String attributeType,String attributeValue){
+     */
+    public Map<String, Object> pullAnalysis(String orgCode, String index, String dataPeriod, String attributeType, String attributeValue) {
         // 初始化调用地址
-        StringBuilder url = new StringBuilder(String.format(pullAnalysis,rootUrl,orgCode,index,dataPeriod));
-        if(!StringUtils.isEmpty(attributeType)){
+        StringBuilder url = new StringBuilder(String.format(pullAnalysis, rootUrl, orgCode, index, dataPeriod));
+        if (!StringUtils.isEmpty(attributeType)) {
             url.append("&attributeType=");
             url.append(attributeType);
         }
-        if(!StringUtils.isEmpty(attributeValue)){
+        if (!StringUtils.isEmpty(attributeValue)) {
             url.append("&attributeValue=");
             url.append(attributeValue);
         }
         ResponseEntity<Map> response = getMapResponseEntity(url.toString());
-        log.info("请求结果:{}",response.getBody());
+        log.info("请求结果:{}", response.getBody());
+        return response.getBody();
+    }
+
+    /**
+     * 查询分析结果信息
+     */
+    public Map<String, Object> pullBatchAnalysis(String orgCode, String dataPeriod) {
+        // 初始化调用地址
+        StringBuilder url = new StringBuilder(String.format(pullBatchAnalysis, rootUrl, orgCode, dataPeriod));
+//        if (!StringUtils.isEmpty(attributeType)) {
+//            url.append("&attributeType=");
+//            url.append(attributeType);
+//        }
+//        if (!StringUtils.isEmpty(attributeValue)) {
+//            url.append("&attributeValue=");
+//            url.append(attributeValue);
+//        }
+        ResponseEntity<Map> response = getMapResponseEntity(url.toString());
+        log.info("请求结果:{}", response.getBody());
         return response.getBody();
     }
 
     private ResponseEntity<Map> getMapResponseEntity(String url) {
         // 判断是否配置了客户端模式的基础信息
-        if(clientMsgIsNull()){
+        if (clientMsgIsNull()) {
             throw new NullPointerException("客户端信息缺失");
         }
         // 1、目前YtDataExchange只支持客户端进行Oauth2中客户端授权模式的访问，因此在访问之前需要先获得客户端授权模式下的access_token
@@ -135,7 +159,7 @@ public class DemoService {
         return restTemplate.exchange(url, HttpMethod.GET, requestEntity, Map.class);
     }
 
-    private boolean clientMsgIsNull(){
+    private boolean clientMsgIsNull() {
         return StringUtils.isEmpty(this.clientId) || StringUtils.isEmpty(this.clientSecret);
     }
 

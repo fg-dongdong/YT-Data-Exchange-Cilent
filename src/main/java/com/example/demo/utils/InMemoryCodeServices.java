@@ -16,18 +16,18 @@ public class InMemoryCodeServices implements CodeService {
 
     /**
      * 用于存储授权码的集合
-     * */
-    private static final ConcurrentHashMap<String,String> codeMap = new ConcurrentHashMap<>();
+     */
+    private static final ConcurrentHashMap<String, String> codeMap = new ConcurrentHashMap<>();
 
     @Override
     public boolean addCode(String name, String code) {
-        codeMap.put(name,code);
+        codeMap.put(name, code);
         return true;
     }
 
     @Override
     public boolean removeCode(String name, String code) {
-        return codeMap.remove(name,code);
+        return codeMap.remove(name, code);
     }
 
     @Override
@@ -39,9 +39,6 @@ public class InMemoryCodeServices implements CodeService {
     @Override
     public boolean haveCodeByName(String name) {
         String key = codeMap.get(name);
-        if(StringUtils.isEmpty(key)){
-            return false;
-        }
-        return true;
+        return !StringUtils.isEmpty(key);
     }
 }

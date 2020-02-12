@@ -15,18 +15,18 @@ import java.util.concurrent.ConcurrentHashMap;
 public class InMemoryTokenServices implements TokenService {
     /**
      * 用于存储token的集合
-     * */
-    private static final ConcurrentHashMap<String,String> tokenMap = new ConcurrentHashMap<>();
+     */
+    private static final ConcurrentHashMap<String, String> tokenMap = new ConcurrentHashMap<>();
 
     @Override
     public boolean addCode(String name, String code) {
-        tokenMap.put(name,code);
+        tokenMap.put(name, code);
         return false;
     }
 
     @Override
     public boolean removeCode(String name, String code) {
-        return tokenMap.remove(name,code);
+        return tokenMap.remove(name, code);
     }
 
     @Override
@@ -38,9 +38,6 @@ public class InMemoryTokenServices implements TokenService {
     @Override
     public boolean haveCodeByName(String name) {
         String key = tokenMap.get(name);
-        if(StringUtils.isEmpty(key)){
-            return false;
-        }
-        return true;
+        return !StringUtils.isEmpty(key);
     }
 }

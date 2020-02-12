@@ -12,21 +12,21 @@ public interface SaveService {
 
     /**
      * 保存数据
-     * */
-    boolean addCode(String name,String code);
+     */
+    boolean addCode(String name, String code);
 
     /**
      * 通过名字移除数据
-     * */
-    boolean removeCode(String name,String code);
+     */
+    boolean removeCode(String name, String code);
 
     /**
      * 通过名字移除数据
-     * */
+     */
     boolean removeCodeByName(String name);
 
     /**
      * 是否有可用数据
-     * */
+     */
     boolean haveCodeByName(String name);
 }

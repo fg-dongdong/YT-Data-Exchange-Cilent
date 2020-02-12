@@ -16,6 +16,6 @@ public class HttpErrorUtils {
 
     public static HttpErrorPage getDefaultHttpErrorObject(String errorBody) throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
-        return objectMapper.readValue(errorBody,HttpErrorPage.class);
+        return objectMapper.readValue(errorBody, HttpErrorPage.class);
     }
 }

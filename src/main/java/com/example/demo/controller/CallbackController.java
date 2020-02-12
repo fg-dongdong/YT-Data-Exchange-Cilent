@@ -23,14 +23,14 @@ public class CallbackController {
     String localhost;
 
     @GetMapping("callback")
-    public Object getCallbackController(@RequestParam(value = "code",required = false)String code,
-                                          @RequestBody(required = false) AccessTokenReq accessTokenReq){
-        System.out.println("回调函数code:"+code);
-        if(!ObjectUtils.isEmpty(accessTokenReq)){
+    public Object getCallbackController(@RequestParam(value = "code", required = false) String code,
+                                        @RequestBody(required = false) AccessTokenReq accessTokenReq) {
+        System.out.println("回调函数code:" + code);
+        if (!ObjectUtils.isEmpty(accessTokenReq)) {
             System.out.println(accessTokenReq.toString());
             return accessTokenReq;
-        }else{
-            oauth2StoreServiceAdaptor.getCodeService().addCode(localhost+"/callback",code);
+        } else {
+            oauth2StoreServiceAdaptor.getCodeService().addCode(localhost + "/callback", code);
         }
         return code;
     }

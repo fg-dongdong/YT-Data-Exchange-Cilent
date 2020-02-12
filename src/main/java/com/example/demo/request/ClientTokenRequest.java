@@ -19,25 +19,25 @@ public class ClientTokenRequest {
 
     /**
      * 授权类型
-     * */
+     */
     @JsonProperty("grant_type")
     private String grantType;
 
     /**
      * 权限类型
-     * */
+     */
     @JsonProperty("scope")
     private String scope;
 
     /**
      * 客户端id
-     * */
+     */
     @JsonProperty("client_id")
     private String clientId;
 
     /**
      * 客户端密码
-     * */
+     */
     @JsonProperty("client_secret")
     private String clientSecret;
 }

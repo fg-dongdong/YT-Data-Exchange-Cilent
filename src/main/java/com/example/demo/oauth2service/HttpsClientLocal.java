@@ -25,10 +25,9 @@ public class HttpsClientLocal {
      * @return
      * @see [类、类#方法、类#成员]
      */
-    public HttpClient httpClient()
-    {
+    public HttpClient httpClient() {
         // 支持HTTP、HTTPS
-        Registry<ConnectionSocketFactory> registry = RegistryBuilder.<ConnectionSocketFactory> create()
+        Registry<ConnectionSocketFactory> registry = RegistryBuilder.<ConnectionSocketFactory>create()
                 .register("http", PlainConnectionSocketFactory.getSocketFactory())
                 .register("https", SSLConnectionSocketFactory.getSocketFactory())
                 .build();

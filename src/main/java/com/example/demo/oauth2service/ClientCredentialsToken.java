@@ -14,28 +14,28 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ClientCredentialsToken{
+public class ClientCredentialsToken {
     /**
      * access_token
-     * */
+     */
     @JsonProperty("access_token")
     private String accessToken;
 
     /**
      * token_type
-     * */
+     */
     @JsonProperty("token_type")
     private String tokenType;
 
     /**
      * expires_in
-     * */
+     */
     @JsonProperty("expires_in")
     private String expiresIn;
 
     /**
      * scope
-     * */
+     */
     @JsonProperty("scope")
     private String scope;
 }
