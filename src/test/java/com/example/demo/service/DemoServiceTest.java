@@ -30,36 +30,54 @@ public class DemoServiceTest extends DemoApplicationTests {
     private String clientSecret;
 
     @Test
-    public void realEstateNetNeuronTest(){
+    @Deprecated
+    public void realEstateNetNeuronTest() {
         demoService.setClientId(this.clientId);
         demoService.setClientSecret(this.clientSecret);
-        log.info("返回结果：{}",demoService.realEstateNetNeuron());
+        log.info("返回结果：{}", demoService.realEstateNetNeuron());
     }
 
     @Test
-    public void pullAttributesTest(){
+    public void pullIndexTest() {
         demoService.setClientId(this.clientId);
         demoService.setClientSecret(this.clientSecret);
-        log.info("返回结果：{}",demoService.pullAttributes());
+        log.info("返回结果：{}", demoService.index());
     }
 
     @Test
-    public void pullDexOrgTreeTest(){
+    public void pullAttributesTest() {
         demoService.setClientId(this.clientId);
         demoService.setClientSecret(this.clientSecret);
-        log.info("返回结果：{}",demoService.pullDexOrgTree());
+        log.info("返回结果：{}", demoService.pullAttributes());
+    }
+
+    @Test
+    public void pullDexOrgTreeTest() {
+        demoService.setClientId(this.clientId);
+        demoService.setClientSecret(this.clientSecret);
+        log.info("返回结果：{}", demoService.pullDexOrgTree());
     }
 
     @Test
     public void pullAnalysisTest() throws IOException {
         demoService.setClientId(this.clientId);
         demoService.setClientSecret(this.clientSecret);
-        try{
-            log.info("无属性返回结果：{}",demoService.pullAnalysis("083","4","2018-06","",""));
-            log.info("有属性返回结果：{}",demoService.pullAnalysis("011","4","2018-06","d_owner_type_four","磨合期"));
-        }catch (HttpServerErrorException e){
-            log.error("异常返回错误信息："+ HttpErrorUtils.getDefaultHttpErrorObject(e.getResponseBodyAsString()));
+        try {
+            log.info("无属性返回结果：{}", demoService.pullAnalysis("083", "4", "2018-06", "", ""));
+            log.info("有属性返回结果：{}", demoService.pullAnalysis("011", "4", "2018-06", "d_owner_type_four", "磨合期"));
+        } catch (HttpServerErrorException e) {
+            log.error("异常返回错误信息：" + HttpErrorUtils.getDefaultHttpErrorObject(e.getResponseBodyAsString()));
         }
+    }
 
+    @Test
+    public void pullBatchAnalysisTest() throws IOException {
+        demoService.setClientId(this.clientId);
+        demoService.setClientSecret(this.clientSecret);
+        try {
+            log.info("返回结果：{}", demoService.pullBatchAnalysis("083",  "2019-06"));
+        } catch (HttpServerErrorException e) {
+            log.error("异常返回错误信息：" + HttpErrorUtils.getDefaultHttpErrorObject(e.getResponseBodyAsString()));
+        }
     }
 }
