@@ -50,6 +50,7 @@ public class DemoService {
      * 获取指标信息调用地址
      */
     private String realEstateNetNeuronUrl = "%s/api/dex/resources/index";
+    private String indexUrl = "%s/api/dex/resources/index";
 
     /**
      * 获取业主类型调用地址
@@ -69,14 +70,22 @@ public class DemoService {
     /**
      * 获取分析结果
      */
-    private String pullBatchAnalysis = "%s/api/dex_batch/resources/analysis?orgCode=%s&dataPeriod=%s";
+    private String pullBatchAnalysis = "%s/api/dex/resources/batch/analysis?orgCode=%s&dataPeriod=%s";
 
     /**
      * 获取指标结果
      */
+    @Deprecated
     public Map<String, Object> realEstateNetNeuron() {
         // 初始化调用地址
         String url = String.format(realEstateNetNeuronUrl, rootUrl);
+        ResponseEntity<Map> response = getMapResponseEntity(url);
+        log.info("请求结果:{}", response.getBody());
+        return response.getBody();
+    }
+    public Map<String, Object> index() {
+        // 初始化调用地址
+        String url = String.format(indexUrl, rootUrl);
         ResponseEntity<Map> response = getMapResponseEntity(url);
         log.info("请求结果:{}", response.getBody());
         return response.getBody();
