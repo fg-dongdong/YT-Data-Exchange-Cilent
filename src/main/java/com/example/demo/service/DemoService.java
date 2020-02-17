@@ -12,10 +12,8 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.client.RestTemplate;
 
-import javax.xml.ws.http.HTTPException;
 import java.util.Map;
 
 /**
@@ -47,15 +45,9 @@ public class DemoService {
     private String rootUrl;
 
     /**
-     * 获取指标信息调用地址
+     * 获取指标及属性信息调用地址
      */
-    private String realEstateNetNeuronUrl = "%s/api/dex/resources/index";
-    private String indexUrl = "%s/api/dex/resources/index";
-
-    /**
-     * 获取业主类型调用地址
-     */
-    private String pullAttributesUrl = "%s/api/dex/resources/attributes";
+    private String infoUrl = "%s/api/dex/resources/info";
 
     /**
      * 获取客户组织结构
@@ -72,31 +64,9 @@ public class DemoService {
      */
     private String pullBatchAnalysis = "%s/api/dex/resources/batch/analysis?orgCode=%s&dataPeriod=%s";
 
-    /**
-     * 获取指标结果
-     */
-    @Deprecated
-    public Map<String, Object> realEstateNetNeuron() {
+    public Map<String, Object> pullInfo() {
         // 初始化调用地址
-        String url = String.format(realEstateNetNeuronUrl, rootUrl);
-        ResponseEntity<Map> response = getMapResponseEntity(url);
-        log.info("请求结果:{}", response.getBody());
-        return response.getBody();
-    }
-    public Map<String, Object> index() {
-        // 初始化调用地址
-        String url = String.format(indexUrl, rootUrl);
-        ResponseEntity<Map> response = getMapResponseEntity(url);
-        log.info("请求结果:{}", response.getBody());
-        return response.getBody();
-    }
-
-    /**
-     * 查询业主类型信息
-     */
-    public Map<String, Object> pullAttributes() {
-        // 初始化调用地址
-        String url = String.format(pullAttributesUrl, rootUrl);
+        String url = String.format(infoUrl, rootUrl);
         ResponseEntity<Map> response = getMapResponseEntity(url);
         log.info("请求结果:{}", response.getBody());
         return response.getBody();

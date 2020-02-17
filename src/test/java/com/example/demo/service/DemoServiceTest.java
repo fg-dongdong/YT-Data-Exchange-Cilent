@@ -1,11 +1,9 @@
 package com.example.demo.service;
 
 import com.example.demo.DemoApplicationTests;
-import com.example.demo.oauth2service.HttpErrorPage;
 import com.example.demo.utils.HttpErrorUtils;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.util.JSONPObject;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -29,39 +27,24 @@ public class DemoServiceTest extends DemoApplicationTests {
     @Value("${dex.clientSecret}")
     private String clientSecret;
 
-    @Test
-    @Deprecated
-    public void realEstateNetNeuronTest() {
+    @Before
+    public void setClient() {
         demoService.setClientId(this.clientId);
         demoService.setClientSecret(this.clientSecret);
-        log.info("返回结果：{}", demoService.realEstateNetNeuron());
     }
 
     @Test
-    public void pullIndexTest() {
-        demoService.setClientId(this.clientId);
-        demoService.setClientSecret(this.clientSecret);
-        log.info("返回结果：{}", demoService.index());
-    }
-
-    @Test
-    public void pullAttributesTest() {
-        demoService.setClientId(this.clientId);
-        demoService.setClientSecret(this.clientSecret);
-        log.info("返回结果：{}", demoService.pullAttributes());
+    public void pullInfo() {
+        log.info("返回结果：{}", demoService.pullInfo());
     }
 
     @Test
     public void pullDexOrgTreeTest() {
-        demoService.setClientId(this.clientId);
-        demoService.setClientSecret(this.clientSecret);
         log.info("返回结果：{}", demoService.pullDexOrgTree());
     }
 
     @Test
     public void pullAnalysisTest() throws IOException {
-        demoService.setClientId(this.clientId);
-        demoService.setClientSecret(this.clientSecret);
         try {
             log.info("无属性返回结果：{}", demoService.pullAnalysis("083", "4", "2018-06", "", ""));
             log.info("有属性返回结果：{}", demoService.pullAnalysis("011", "4", "2018-06", "d_owner_type_four", "磨合期"));
@@ -72,8 +55,6 @@ public class DemoServiceTest extends DemoApplicationTests {
 
     @Test
     public void pullBatchAnalysisTest() throws IOException {
-        demoService.setClientId(this.clientId);
-        demoService.setClientSecret(this.clientSecret);
         try {
             log.info("返回结果：{}", demoService.pullBatchAnalysis("083",  "2019-06"));
         } catch (HttpServerErrorException e) {
