@@ -44,6 +44,12 @@ public class DemoServiceTest extends DemoApplicationTests {
     }
 
     @Test
+    public void pullAnalysisInfoTest() {
+        log.info("返回结果：{}", demoService.pullAnalysisInfo("436562,436580,436618"
+                , "2019-01,2019-02,2019-03,2019-04,2019-05,2019-06,2019-07,2019-08,2019-09"));
+    }
+
+    @Test
     public void pullAnalysisTest() throws IOException {
         try {
             log.info("无属性返回结果：{}", demoService.pullAnalysis("083", "4", "2018-06", "", ""));
@@ -56,7 +62,7 @@ public class DemoServiceTest extends DemoApplicationTests {
     @Test
     public void pullBatchAnalysisTest() throws IOException {
         try {
-            log.info("返回结果：{}", demoService.pullBatchAnalysis("083",  "2019-06"));
+            log.info("返回结果：{}", demoService.pullBatchAnalysis("083", "2019-06"));
         } catch (HttpServerErrorException e) {
             log.error("异常返回错误信息：" + HttpErrorUtils.getDefaultHttpErrorObject(e.getResponseBodyAsString()));
         }

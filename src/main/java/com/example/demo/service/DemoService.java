@@ -33,42 +33,30 @@ public class DemoService {
     private String clientId;
     @Setter
     private String clientSecret;
-    /**
-     * 使用url传参形式访问资源
-     */
-    private String accessTokenParam = "?access_token=%s";
 
-    /**
-     * dex-changge 服务地址
-     */
+    // dex 服务地址
     @Value("${dex.rootUrl}")
     private String rootUrl;
 
-    /**
-     * 获取指标及属性信息调用地址
-     */
-    private String infoUrl = "%s/api/dex/resources/info";
-
-    /**
-     * 获取客户组织结构
-     */
-    private String pullDexOrgTree = "%s/api/dex/resources/orgTree";
-
-    /**
-     * 获取分析结果
-     */
-    private String pullAnalysis = "%s/api/dex/resources/analysis?orgCode=%s&index=%s&dataPeriod=%s";
-
-    /**
-     * 获取分析结果
-     */
-    private String pullBatchAnalysis = "%s/api/dex/resources/batch/analysis?orgCode=%s&dataPeriod=%s";
+    // 使用url传参形式访问资源
+    private static String accessTokenParam = "?access_token=%s";
+    // 获取指标及属性信息调用地址
+    private static String infoUrl = "%s/api/dex/resources/info";
+    // 获取客户组织结构
+    private static String pullDexOrgTree = "%s/api/dex/resources/orgTree";
+    // 获取客户组织结构
+    private static String pullAnalysisInfo = "%s/api/dex/resources/analysis/info?orgIds=%s&dataPeriods=%s";
+    // 获取分析结果
+    private static String pullAnalysis = "%s/api/dex/resources/analysis?orgCode=%s&index=%s&dataPeriod=%s";
+    // 获取分析结果
+    private static String pullBatchAnalysis = "%s/api/dex/resources/batch/analysis?orgCode=%s&dataPeriod=%s";
 
     public Map<String, Object> pullInfo() {
         // 初始化调用地址
         String url = String.format(infoUrl, rootUrl);
+        log.info("请求地址：{}", url);
         ResponseEntity<Map> response = getMapResponseEntity(url);
-        log.info("请求结果:{}", response.getBody());
+        log.info("请求结果: {}", response.getBody());
         return response.getBody();
     }
 
@@ -78,8 +66,21 @@ public class DemoService {
     public Map<String, Object> pullDexOrgTree() {
         // 初始化调用地址
         String url = String.format(pullDexOrgTree, rootUrl);
+        log.info("请求地址：{}", url);
         ResponseEntity<Map> response = getMapResponseEntity(url);
-        log.info("请求结果:{}", response.getBody());
+        log.info("请求结果: {}", response.getBody());
+        return response.getBody();
+    }
+
+    /**
+     * 查询分析结果统计信息
+     */
+    public Map<String, Object> pullAnalysisInfo(String orgIds, String dataPeriods) {
+        // 初始化调用地址
+        String url = String.format(pullAnalysisInfo, rootUrl, orgIds,dataPeriods);
+        log.info("请求地址：{}", url);
+        ResponseEntity<Map> response = getMapResponseEntity(url);
+        log.info("请求结果: {}", response.getBody());
         return response.getBody();
     }
 
@@ -129,12 +130,13 @@ public class DemoService {
         // 1、目前YtDataExchange只支持客户端进行Oauth2中客户端授权模式的访问，因此在访问之前需要先获得客户端授权模式下的access_token
         String accessToken = clientCredentialsService.getTokenByClientCredentials(clientId, clientSecret);
 
-        RestTemplate restTemplate = restTemplateBuilder.build();//初始化调用模板
         // 2、 使用请求headers中添加参数
         HttpHeaders requestHeaders = new HttpHeaders();
         requestHeaders.add("Authorization", "Bearer " + accessToken);
         HttpEntity<String> requestEntity = new HttpEntity<String>(null, requestHeaders);
+
         // 可以自行设置返回的对象class，可以自动映射返回json格式的数据到对象
+        RestTemplate restTemplate = restTemplateBuilder.build();//初始化调用模板
         return restTemplate.exchange(url, HttpMethod.GET, requestEntity, Map.class);
     }
 
