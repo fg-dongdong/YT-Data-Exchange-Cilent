@@ -47,9 +47,7 @@ public class DemoService {
     // 获取客户组织结构
     private static String pullAnalysisInfo = "%s/api/dex/resources/analysis/info?orgIds=%s&dataPeriods=%s";
     // 获取分析结果
-    private static String pullAnalysis = "%s/api/dex/resources/analysis?orgCode=%s&index=%s&dataPeriod=%s";
-    // 获取分析结果
-    private static String pullBatchAnalysis = "%s/api/dex/resources/batch/analysis?orgCode=%s&dataPeriod=%s";
+    private static String pullAnalysis = "%s/api/dex/resources/analysis/batch?orgIds=%s&dataPeriods=%s&pageNo=%s&pageSize=%s";
 
     public Map<String, Object> pullInfo() {
         // 初始化调用地址
@@ -85,8 +83,23 @@ public class DemoService {
     }
 
     /**
-     * 查询分析结果信息
+     * 查询分析结果
      */
+    public Map<String, Object> pullAnalysis(String orgIds, String dataPeriods, Integer pageNo, Integer pageSize) {
+        // 初始化调用地址
+        String url = String.format(pullAnalysis, rootUrl, orgIds,dataPeriods, pageNo, pageSize);
+        log.info("请求地址：{}", url);
+        ResponseEntity<Map> response = getMapResponseEntity(url);
+        log.info("请求结果: {}", response.getBody());
+        return response.getBody();
+    }
+
+/*
+    */
+/**
+     * 查询分析结果信息
+     *//*
+
     public Map<String, Object> pullAnalysis(String orgCode, String index, String dataPeriod, String attributeType, String attributeValue) {
         // 初始化调用地址
         StringBuilder url = new StringBuilder(String.format(pullAnalysis, rootUrl, orgCode, index, dataPeriod));
@@ -103,9 +116,11 @@ public class DemoService {
         return response.getBody();
     }
 
-    /**
+    */
+/**
      * 查询分析结果信息
-     */
+     *//*
+
     public Map<String, Object> pullBatchAnalysis(String orgCode, String dataPeriod) {
         // 初始化调用地址
         StringBuilder url = new StringBuilder(String.format(pullBatchAnalysis, rootUrl, orgCode, dataPeriod));
@@ -121,6 +136,7 @@ public class DemoService {
         log.info("请求结果:{}", response.getBody());
         return response.getBody();
     }
+*/
 
     private ResponseEntity<Map> getMapResponseEntity(String url) {
         // 判断是否配置了客户端模式的基础信息
