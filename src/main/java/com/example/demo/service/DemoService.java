@@ -44,6 +44,8 @@ public class DemoService {
     private static String infoUrl = "%s/api/dex/resources/info";
     // 获取客户组织结构
     private static String pullDexOrgTree = "%s/api/dex/resources/orgTree";
+    // 获取客户组织结构变更
+    private static String pullDexOrgChange = "%s/api/dex/resources/orgChange?version=%s";
     // 获取客户组织结构
     private static String pullAnalysisInfo = "%s/api/dex/resources/analysis/info?orgIds=%s&dataPeriods=%s";
     // 获取分析结果
@@ -64,6 +66,18 @@ public class DemoService {
     public Map<String, Object> pullDexOrgTree() {
         // 初始化调用地址
         String url = String.format(pullDexOrgTree, rootUrl);
+        log.info("请求地址：{}", url);
+        ResponseEntity<Map> response = getMapResponseEntity(url);
+        log.info("请求结果: {}", response.getBody());
+        return response.getBody();
+    }
+
+    /**
+     * 查询组织结构变更
+     */
+    public Map<String, Object> pullDexOrgChange(Long version) {
+        // 初始化调用地址
+        String url = String.format(pullDexOrgChange, rootUrl, version);
         log.info("请求地址：{}", url);
         ResponseEntity<Map> response = getMapResponseEntity(url);
         log.info("请求结果: {}", response.getBody());

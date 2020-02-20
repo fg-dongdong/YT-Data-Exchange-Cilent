@@ -44,6 +44,11 @@ public class DemoServiceTest extends DemoApplicationTests {
     }
 
     @Test
+    public void pullDexOrgChangeTest() {
+        log.info("返回结果：{}", demoService.pullDexOrgChange(1546272000000L));
+    }
+
+    @Test
     public void pullAnalysisInfoTest() {
         log.info("返回结果：{}", demoService.pullAnalysisInfo("436562,436563,436564"
                 , "2019-01,2019-02,2019-03,2019-04,2019-05,2019-06,2019-07,2019-08,2019-09"));
