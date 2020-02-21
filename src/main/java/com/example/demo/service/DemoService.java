@@ -39,10 +39,10 @@ public class DemoService {
     @Value("${dex.rootUrl}")
     private String rootUrl;
 
-    // 使用url传参形式访问资源
-    private static String accessTokenParam = "?access_token=%s";
     // 获取指标及属性信息调用地址
     private static String infoUrl = "%s/api/dex/resources/info";
+    // 获取指标及属性信息调用地址
+    private static String infoChangeUrl = "%s/api/dex/resources/infoChange?version=%s";
     // 获取客户组织结构
     private static String pullDexOrgTree = "%s/api/dex/resources/orgTree";
     // 获取客户组织结构变更
@@ -55,6 +55,16 @@ public class DemoService {
     public JSONObject pullInfo() {
         // 初始化调用地址
         String url = String.format(infoUrl, rootUrl);
+        log.info("请求地址：{}", url);
+        ResponseEntity<Map> response = getMapResponseEntity(url);
+        log.info("请求结果: {}", response.getBody());
+
+        return new JSONObject(response.getBody());
+    }
+
+    public JSONObject pullInfoChange(Long version) {
+        // 初始化调用地址
+        String url = String.format(infoChangeUrl, rootUrl, version);
         log.info("请求地址：{}", url);
         ResponseEntity<Map> response = getMapResponseEntity(url);
         log.info("请求结果: {}", response.getBody());
@@ -109,50 +119,6 @@ public class DemoService {
         log.info("请求结果: {}", response.getBody());
         return new JSONObject(response.getBody());
     }
-
-/*
-    */
-/**
-     * 查询分析结果信息
-     *//*
-
-    public Map<String, Object> pullAnalysis(String orgCode, String index, String dataPeriod, String attributeType, String attributeValue) {
-        // 初始化调用地址
-        StringBuilder url = new StringBuilder(String.format(pullAnalysis, rootUrl, orgCode, index, dataPeriod));
-        if (!StringUtils.isEmpty(attributeType)) {
-            url.append("&attributeType=");
-            url.append(attributeType);
-        }
-        if (!StringUtils.isEmpty(attributeValue)) {
-            url.append("&attributeValue=");
-            url.append(attributeValue);
-        }
-        ResponseEntity<Map> response = getMapResponseEntity(url.toString());
-        log.info("请求结果:{}", response.getBody());
-        return response.getBody();
-    }
-
-    */
-/**
-     * 查询分析结果信息
-     *//*
-
-    public Map<String, Object> pullBatchAnalysis(String orgCode, String dataPeriod) {
-        // 初始化调用地址
-        StringBuilder url = new StringBuilder(String.format(pullBatchAnalysis, rootUrl, orgCode, dataPeriod));
-//        if (!StringUtils.isEmpty(attributeType)) {
-//            url.append("&attributeType=");
-//            url.append(attributeType);
-//        }
-//        if (!StringUtils.isEmpty(attributeValue)) {
-//            url.append("&attributeValue=");
-//            url.append(attributeValue);
-//        }
-        ResponseEntity<Map> response = getMapResponseEntity(url.toString());
-        log.info("请求结果:{}", response.getBody());
-        return response.getBody();
-    }
-*/
 
     private ResponseEntity<Map> getMapResponseEntity(String url) {
         // 判断是否配置了客户端模式的基础信息
