@@ -51,6 +51,8 @@ public class DemoService {
     private static String pullAnalysisInfo = "%s/api/dex/resources/analysis/info?orgIds=%s&dataPeriods=%s";
     // 获取分析结果
     private static String pullAnalysis = "%s/api/dex/resources/analysis/batch?orgIds=%s&dataPeriods=%s&pageNo=%s&pageSize=%s";
+    // 获取原始数据
+    private static String pullData = "%s/api/dex/resources/data?date=%s";
 
     public JSONObject pullInfo() {
         // 初始化调用地址
@@ -114,6 +116,18 @@ public class DemoService {
     public JSONObject pullAnalysis(String orgIds, String dataPeriods, Integer pageNo, Integer pageSize) {
         // 初始化调用地址
         String url = String.format(pullAnalysis, rootUrl, orgIds,dataPeriods, pageNo, pageSize);
+        log.info("请求地址：{}", url);
+        ResponseEntity<Map> response = getMapResponseEntity(url);
+        log.info("请求结果: {}", response.getBody());
+        return new JSONObject(response.getBody());
+    }
+
+    /**
+     * 查询原始数据
+     */
+    public JSONObject pullData(String date) {
+        // 初始化调用地址
+        String url = String.format(pullData, rootUrl, date);
         log.info("请求地址：{}", url);
         ResponseEntity<Map> response = getMapResponseEntity(url);
         log.info("请求结果: {}", response.getBody());

@@ -61,4 +61,9 @@ public class DemoServiceTest extends DemoApplicationTests {
                 , "2019-01,2019-02,2019-03,2019-04,2019-05,2019-06,2019-07,2019-08,2019-09", 1, 100));
     }
 
+    @Test
+    public void pullDataTest() {
+        log.info("返回结果[JSON]：{}", demoService.pullData("2019-12-16"));
+    }
+
 }
