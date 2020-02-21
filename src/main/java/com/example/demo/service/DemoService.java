@@ -3,6 +3,7 @@ package com.example.demo.service;
 import com.example.demo.oauth2service.ClientCredentialsService;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
@@ -51,61 +52,62 @@ public class DemoService {
     // 获取分析结果
     private static String pullAnalysis = "%s/api/dex/resources/analysis/batch?orgIds=%s&dataPeriods=%s&pageNo=%s&pageSize=%s";
 
-    public Map<String, Object> pullInfo() {
+    public JSONObject pullInfo() {
         // 初始化调用地址
         String url = String.format(infoUrl, rootUrl);
         log.info("请求地址：{}", url);
         ResponseEntity<Map> response = getMapResponseEntity(url);
         log.info("请求结果: {}", response.getBody());
-        return response.getBody();
+
+        return new JSONObject(response.getBody());
     }
 
     /**
      * 查询组织结构
      */
-    public Map<String, Object> pullDexOrgTree() {
+    public JSONObject pullDexOrgTree() {
         // 初始化调用地址
         String url = String.format(pullDexOrgTree, rootUrl);
         log.info("请求地址：{}", url);
         ResponseEntity<Map> response = getMapResponseEntity(url);
         log.info("请求结果: {}", response.getBody());
-        return response.getBody();
+        return new JSONObject(response.getBody());
     }
 
     /**
      * 查询组织结构变更
      */
-    public Map<String, Object> pullDexOrgChange(Long version) {
+    public JSONObject pullDexOrgChange(Long version) {
         // 初始化调用地址
         String url = String.format(pullDexOrgChange, rootUrl, version);
         log.info("请求地址：{}", url);
         ResponseEntity<Map> response = getMapResponseEntity(url);
         log.info("请求结果: {}", response.getBody());
-        return response.getBody();
+        return new JSONObject(response.getBody());
     }
 
     /**
      * 查询分析结果统计信息
      */
-    public Map<String, Object> pullAnalysisInfo(String orgIds, String dataPeriods) {
+    public JSONObject pullAnalysisInfo(String orgIds, String dataPeriods) {
         // 初始化调用地址
         String url = String.format(pullAnalysisInfo, rootUrl, orgIds,dataPeriods);
         log.info("请求地址：{}", url);
         ResponseEntity<Map> response = getMapResponseEntity(url);
         log.info("请求结果: {}", response.getBody());
-        return response.getBody();
+        return new JSONObject(response.getBody());
     }
 
     /**
      * 查询分析结果
      */
-    public Map<String, Object> pullAnalysis(String orgIds, String dataPeriods, Integer pageNo, Integer pageSize) {
+    public JSONObject pullAnalysis(String orgIds, String dataPeriods, Integer pageNo, Integer pageSize) {
         // 初始化调用地址
         String url = String.format(pullAnalysis, rootUrl, orgIds,dataPeriods, pageNo, pageSize);
         log.info("请求地址：{}", url);
         ResponseEntity<Map> response = getMapResponseEntity(url);
         log.info("请求结果: {}", response.getBody());
-        return response.getBody();
+        return new JSONObject(response.getBody());
     }
 
 /*
