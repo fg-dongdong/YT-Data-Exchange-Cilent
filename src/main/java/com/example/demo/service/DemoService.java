@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -54,6 +55,9 @@ public class DemoService {
     // 获取原始数据
     private static String pullData = "%s/api/dex/resources/data?date=%s";
 
+    /**
+     * 查询指标和属性
+     */
     public JSONObject pullInfo() {
         // 初始化调用地址
         String url = String.format(infoUrl, rootUrl);
@@ -64,6 +68,9 @@ public class DemoService {
         return new JSONObject(response.getBody());
     }
 
+    /**
+     * 查询指标属性变更
+     */
     public JSONObject pullInfoChange(Long version) {
         // 初始化调用地址
         String url = String.format(infoChangeUrl, rootUrl, version);
@@ -103,7 +110,7 @@ public class DemoService {
      */
     public JSONObject pullAnalysisInfo(String orgIds, String dataPeriods) {
         // 初始化调用地址
-        String url = String.format(pullAnalysisInfo, rootUrl, orgIds,dataPeriods);
+        String url = String.format(pullAnalysisInfo, rootUrl, orgIds, dataPeriods);
         log.info("请求地址：{}", url);
         ResponseEntity<Map> response = getMapResponseEntity(url);
         log.info("请求结果: {}", response.getBody());
@@ -115,7 +122,7 @@ public class DemoService {
      */
     public JSONObject pullAnalysis(String orgIds, String dataPeriods, Integer pageNo, Integer pageSize) {
         // 初始化调用地址
-        String url = String.format(pullAnalysis, rootUrl, orgIds,dataPeriods, pageNo, pageSize);
+        String url = String.format(pullAnalysis, rootUrl, orgIds, dataPeriods, pageNo, pageSize);
         log.info("请求地址：{}", url);
         ResponseEntity<Map> response = getMapResponseEntity(url);
         log.info("请求结果: {}", response.getBody());
@@ -132,6 +139,13 @@ public class DemoService {
         ResponseEntity<Map> response = getMapResponseEntity(url);
         log.info("请求结果: {}", response.getBody());
         return new JSONObject(response.getBody());
+    }
+
+    /**
+     * 推送名单
+     */
+    public JSONObject pushNameList(List<Map> nameList) {
+        return null;
     }
 
     private ResponseEntity<Map> getMapResponseEntity(String url) {

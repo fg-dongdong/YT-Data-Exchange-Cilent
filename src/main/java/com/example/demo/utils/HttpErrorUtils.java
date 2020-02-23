@@ -2,7 +2,6 @@ package com.example.demo.utils;
 
 import com.example.demo.oauth2service.HttpErrorPage;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.web.client.HttpServerErrorException;
 
 import java.io.IOException;
 

@@ -1,7 +1,5 @@
 package com.example.demo.utils;
 
-import java.util.concurrent.ConcurrentHashMap;
-
 /**
  * @Classname CodeService
  * @Description 用于Oauth相关信息的的存储与获取
