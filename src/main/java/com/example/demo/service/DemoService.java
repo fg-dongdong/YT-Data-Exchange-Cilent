@@ -49,11 +49,15 @@ public class DemoService {
     // 获取客户组织结构变更
     private static String pullDexOrgChange = "%s/api/dex/resources/orgChange?version=%s";
     // 获取客户组织结构
-    private static String pullAnalysisInfo = "%s/api/dex/resources/analysis/info?orgIds=%s&dataPeriods=%s";
+    private static String pullAnalysisInfo = "%s/api/dex/resources/analysis/info?orgIds=%s&dataPeriods=%s&attribute=%s";
     // 获取分析结果
-    private static String pullAnalysis = "%s/api/dex/resources/analysis/batch?orgIds=%s&dataPeriods=%s&pageNo=%s&pageSize=%s";
+    private static String pullAnalysis = "%s/api/dex/resources/analysis/batch?orgIds=%s&dataPeriods=%s&pageNo=%s&pageSize=%s&attribute=%s";
     // 获取原始数据
     private static String pullData = "%s/api/dex/resources/data?date=%s";
+    // 获取客户NameList
+    private static String pullDeveloperNameList = "%s/api/dex/resources/namelist?date=%s";
+    // 获取VVOOK系统内NameList
+    private static String pullNameListWithSurl = "%s/api/dex/resources/namelist_surl?date=%s";
 
     /**
      * 查询指标和属性
@@ -110,7 +114,7 @@ public class DemoService {
      */
     public JSONObject pullAnalysisInfo(String orgIds, String dataPeriods) {
         // 初始化调用地址
-        String url = String.format(pullAnalysisInfo, rootUrl, orgIds, dataPeriods);
+        String url = String.format(pullAnalysisInfo, rootUrl, orgIds, dataPeriods, "");
         log.info("请求地址：{}", url);
         ResponseEntity<Map> response = getMapResponseEntity(url);
         log.info("请求结果: {}", response.getBody());
@@ -122,7 +126,7 @@ public class DemoService {
      */
     public JSONObject pullAnalysis(String orgIds, String dataPeriods, Integer pageNo, Integer pageSize) {
         // 初始化调用地址
-        String url = String.format(pullAnalysis, rootUrl, orgIds, dataPeriods, pageNo, pageSize);
+        String url = String.format(pullAnalysis, rootUrl, orgIds, dataPeriods, pageNo, pageSize, "");
         log.info("请求地址：{}", url);
         ResponseEntity<Map> response = getMapResponseEntity(url);
         log.info("请求结果: {}", response.getBody());
@@ -135,6 +139,24 @@ public class DemoService {
     public JSONObject pullData(String date) {
         // 初始化调用地址
         String url = String.format(pullData, rootUrl, date);
+        log.info("请求地址：{}", url);
+        ResponseEntity<Map> response = getMapResponseEntity(url);
+        log.info("请求结果: {}", response.getBody());
+        return new JSONObject(response.getBody());
+    }
+
+    public JSONObject pullDeveloperPurifiedNameList(String date) {
+        // 初始化调用地址
+        String url = String.format(pullDeveloperNameList, rootUrl, date);
+        log.info("请求地址：{}", url);
+        ResponseEntity<Map> response = getMapResponseEntity(url);
+        log.info("请求结果: {}", response.getBody());
+        return new JSONObject(response.getBody());
+    }
+
+    public JSONObject pullVvookNameListWithShortedUrl(String date) {
+        // 初始化调用地址
+        String url = String.format(pullNameListWithSurl, rootUrl, date);
         log.info("请求地址：{}", url);
         ResponseEntity<Map> response = getMapResponseEntity(url);
         log.info("请求结果: {}", response.getBody());

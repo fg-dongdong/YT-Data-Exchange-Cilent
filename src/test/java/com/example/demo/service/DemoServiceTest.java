@@ -66,4 +66,13 @@ public class DemoServiceTest extends DemoApplicationTests {
         log.info("返回结果[JSON]：{}", demoService.pullData("2019-12-16"));
     }
 
+    @Test
+    public void pullDeveloperPurifiedNameList() { // from developer
+        log.info("返回结果[JSON]：{}", demoService.pullDeveloperPurifiedNameList("2019-12-16"));
+    }
+
+    @Test
+    public void pullNameListWithShortedUrl() { // from dex
+        log.info("返回结果[JSON]：{}", demoService.pullVvookNameListWithShortedUrl("2019-12-16"));
+    }
 }
