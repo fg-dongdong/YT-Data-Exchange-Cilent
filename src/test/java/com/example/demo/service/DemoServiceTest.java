@@ -72,7 +72,7 @@ public class DemoServiceTest extends DemoApplicationTests {
     }
 
     @Test
-    public void pullNameListWithShortedUrl() { // from dex
-        log.info("返回结果[JSON]：{}", demoService.pullVvookNameListWithShortedUrl("2019-12-16"));
+    public void pullDexResearchNameList() { // from dex
+        log.info("返回结果[JSON]：{}", demoService.pullDexResearchNameList("2019-12-16"));
     }
 }

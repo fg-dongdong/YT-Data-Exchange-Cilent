@@ -55,9 +55,9 @@ public class DemoService {
     // 获取原始数据
     private static String pullData = "%s/api/dex/resources/data?date=%s";
     // 获取客户NameList
-    private static String pullDeveloperNameList = "%s/api/dex/resources/namelist?date=%s";
+    private static String fetchDeveloperNameListUrl = "%s/api/dex/resources/namelist?date=%s";
     // 获取VVOOK系统内NameList
-    private static String pullNameListWithSurl = "%s/api/dex/resources/namelist_surl?date=%s";
+    private static String pullDexResearchNameListUrl = "%s/api/dex/resources/namelistresearch?date=%s";
 
     /**
      * 查询指标和属性
@@ -147,16 +147,16 @@ public class DemoService {
 
     public JSONObject pullDeveloperPurifiedNameList(String date) {
         // 初始化调用地址
-        String url = String.format(pullDeveloperNameList, rootUrl, date);
+        String url = String.format(fetchDeveloperNameListUrl, rootUrl, date);
         log.info("请求地址：{}", url);
         ResponseEntity<Map> response = getMapResponseEntity(url);
         log.info("请求结果: {}", response.getBody());
         return new JSONObject(response.getBody());
     }
 
-    public JSONObject pullVvookNameListWithShortedUrl(String date) {
+    public JSONObject pullDexResearchNameList(String date) {
         // 初始化调用地址
-        String url = String.format(pullNameListWithSurl, rootUrl, date);
+        String url = String.format(pullDexResearchNameListUrl, rootUrl, date);
         log.info("请求地址：{}", url);
         ResponseEntity<Map> response = getMapResponseEntity(url);
         log.info("请求结果: {}", response.getBody());
