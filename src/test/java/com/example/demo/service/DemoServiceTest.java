@@ -73,6 +73,7 @@ public class DemoServiceTest extends DemoApplicationTests {
 
     @Test
     public void pullDexResearchNameList() { // from dex
-        log.info("返回结果[JSON]：{}", demoService.pullDexResearchNameList("2019-12-16"));
+        log.info("返回结果[JSON]：{}", demoService.pullDexResearchNameList("2020-07-07"));
     }
+
 }

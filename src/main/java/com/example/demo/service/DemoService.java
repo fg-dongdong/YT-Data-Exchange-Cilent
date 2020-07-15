@@ -7,14 +7,12 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.client.RestTemplate;
 
+import java.io.*;
 import java.util.List;
 import java.util.Map;
 
@@ -55,7 +53,7 @@ public class DemoService {
     // 获取原始数据
     private static String pullData = "%s/api/dex/resources/data?date=%s";
     // 获取客户NameList
-    private static String fetchDeveloperNameListUrl = "%s/api/dex/resources/namelist?date=%s";
+    private static String fetchDeveloperNameListUrl = "%s/api/dex/resources/name_list?date=%s";
     // 获取VVOOK系统内NameList
     private static String pullDexResearchNameListUrl = "%s/api/dex/resources/namelistresearch?date=%s";
 
@@ -151,7 +149,9 @@ public class DemoService {
         log.info("请求地址：{}", url);
         ResponseEntity<Map> response = getMapResponseEntity(url);
         log.info("请求结果: {}", response.getBody());
-        return new JSONObject(response.getBody());
+        if (response.getStatusCodeValue() == 200)
+            return new JSONObject();
+        return new JSONObject();
     }
 
     public JSONObject pullDexResearchNameList(String date) {
